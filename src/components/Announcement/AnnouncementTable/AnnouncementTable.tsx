@@ -1,7 +1,14 @@
 import styles from "./AnnouncementTable.module.css";
 import {BsFillPencilFill, BsFillTrashFill} from "react-icons/bs";
+import {AnnouncementProps} from "../AnnouncementProps.tsx";
 
-export function AnnouncementTable({rows, deleteRow, editRow}) {
+interface AnnouncementTableProps {
+    rows: AnnouncementProps[];
+    deleteRow: (announcementId: number) => void;
+    editRow: (announcementId: number) => void;
+}
+
+export function AnnouncementTable({rows,  deleteRow, editRow}: AnnouncementTableProps) {
     return (
         <section className={styles.AnnouncementTable}>
             <table className={styles.table}>
@@ -17,7 +24,7 @@ export function AnnouncementTable({rows, deleteRow, editRow}) {
                     </tr>
                 </thead>
                 <tbody>
-                    {rows.map((row => {
+                    {rows?.map((row => {
                         return <tr key={row.announcementId}>
                             <td>{row.announcementId}</td>
                             <td>{row.title}</td>

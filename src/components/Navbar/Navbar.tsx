@@ -1,8 +1,15 @@
-import {NavLink} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 
 import styles from "./Navbar.module.css";
 
 export function Navbar() {
+    const location = useLocation();
+    const isAnnouncementsPage = location.pathname === "/announcements"
+    const isUniversitiesPage = location.pathname === "/universities"
+    const isFacultiesPage = location.pathname === "/faculties"
+    const isLocationsPage = location.pathname === "/locations"
+    const isEventsPage = location.pathname === "/events"
+
     function handleLogOut() {
         localStorage.setItem("loginToken", "");
         window.location.href = "/login";
@@ -13,19 +20,24 @@ export function Navbar() {
             <div className={styles.logo}>FirstStepApp</div>
             <menu className={styles.menuList}>
                 <li>
-                    <NavLink className={styles.navbarLink} to="universities">Universities</NavLink>
+                    <NavLink className={`${styles.navbarLink} ${isUniversitiesPage ? styles.selected : ''}`}
+                             to="universities">Universities</NavLink>
                 </li>
                 <li>
-                    <NavLink className={styles.navbarLink} to="faculties">Faculties</NavLink>
+                    <NavLink className={`${styles.navbarLink} ${isFacultiesPage ? styles.selected : ''}`}
+                             to="faculties">Faculties</NavLink>
                 </li>
                 <li>
-                    <NavLink className={styles.navbarLink} to="announcements">Announcements</NavLink>
+                    <NavLink className={`${styles.navbarLink} ${isAnnouncementsPage ? styles.selected : ''}`}
+                             to="announcements">Announcements</NavLink>
                 </li>
                 <li>
-                    <NavLink className={styles.navbarLink} to="locations">Locations</NavLink>
+                    <NavLink className={`${styles.navbarLink} ${isLocationsPage ? styles.selected : ''}`}
+                             to="locations">Locations</NavLink>
                 </li>
                 <li>
-                    <NavLink className={styles.navbarLink} to="events">Events</NavLink>
+                    <NavLink className={`${styles.navbarLink} ${isEventsPage ? styles.selected : ''}`}
+                             to="events">Events</NavLink>
                 </li>
                 <li>
                     <NavLink className={styles.navbarLink} to="login" onClick={handleLogOut}>Logout</NavLink>
