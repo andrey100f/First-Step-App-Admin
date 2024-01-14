@@ -1,34 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Navbar} from "./components/Navbar/Navbar.tsx";
+import {useEffect, useState} from "react";
+import {Login} from "./components/Login/Login.tsx";
+import {Announcement} from "./components/Announcement/Announcement.tsx";
 function App() {
-  const [count, setCount] = useState(0)
+    const [showNavbar, setShowNavbar] = useState(true);
 
+    useEffect(() => {
+        const token = localStorage.getItem("loginToken");
+        if(token !== "") {
+            setShowNavbar(true);
+        }
+        else {
+            setShowNavbar(false);
+        }
+
+    }, []);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <>
+          <BrowserRouter>
+              {showNavbar && (
+                  <Navbar />
+              )}
+              <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="universities" element={<h1>Universities</h1>} />
+                  <Route path="faculties" element={<h1>Faculties</h1>} />
+                  <Route path="announcements" element={<Announcement />} />
+                  <Route path="locations" element={<h1>Locations</h1>} />
+                  <Route path="events" element={<h1>Events</h1>} />
+              </Routes>
+          </BrowserRouter>
+      </>
   )
 }
 

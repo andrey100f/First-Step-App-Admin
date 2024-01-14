@@ -1,0 +1,88 @@
+* {
+    font-family: 'Roboto', sans-serif;
+    font-size: 36px;
+}
+
+body {
+    background-color: #222D32;
+}
+
+.loginFormContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #11101b;
+    text-align: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    padding: 50px 50px;
+}
+
+.loginLogo {
+    height: 100px;
+    font-size: 80px;
+    line-height: 100px;
+    background: -webkit-linear-gradient(#27EF9F, #0DB8DE);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.loginTitle {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 36px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: #ECF0F5;
+    text-transform: uppercase;
+}
+
+.loginForm {
+    margin-top: 25px;
+}
+
+.loginFormGroup {
+    margin-bottom: 40px;
+    outline: 0;
+}
+
+.loginFormLabel {
+    display: block;
+    font-size: 18px;
+    color: #6C6C6C;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.loginFormInput:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-bottom: 2px solid #0DB8DE;
+    outline: 0;
+    background-color: transparent;
+    color: #ECF0F5;
+}
+
+.loginFormInput {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #0DB8DE;
+    border-top: 0;
+    border-radius: 0;
+    font-weight: bold;
+    outline: 0;
+    margin-bottom: 20px;
+    padding-left: 0;
+    color: #ECF0F5;
+    font-size: 32px;
+}
+
+.loginButton {
+    cursor: pointer;
+    border: 1px solid #0DB8DE;
+    background-color: transparent;
+    width: 200px;
+    color: #0DB8DE;
+    padding: 10px 0;
+}
