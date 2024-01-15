@@ -28,7 +28,6 @@ export function Location() {
     };
 
     const handleSubmitLocation = async (locationToSubmit: LocationProps) => {
-        console.log(locationToSubmit);
         if(locationToEdit == null) {
             await addLocation(locationToSubmit);
         }

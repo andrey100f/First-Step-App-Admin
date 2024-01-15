@@ -3,30 +3,39 @@ import {AnnouncementModal} from "./AnnouncementModal.tsx";
 
 import styles from "../styles/EntityModal.module.css"
 import { useEffect, useState } from "react";
-import {getAnnouncements} from "./AnnouncementApi.tsx";
+import {addAnnouncement, deleteAnnouncement, getAllAnnouncements, updateAnnouncement} from "./AnnouncementApi.tsx";
 import {AnnouncementProps} from "./AnnouncementProps.tsx";
 
 export function Announcement() {
     const [open, setOpen] = useState(false);
     const [announcements, setAnnouncements] = useState<AnnouncementProps[]>([]);
-    const [announcementToEdit, setAnnouncementToEdit] = useState(0);
+    const [announcementToEdit, setAnnouncementToEdit] = useState<null | number>(0);
 
     useEffect(() => {
-        const getRows = async () => {
-            const res = await getAnnouncements();
+        const getAnnouncements = async () => {
+            const res = await getAllAnnouncements();
             setAnnouncements(res);
         }
 
 
-        getRows()
+        getAnnouncements()
     }, []);
 
-    const handleDeleteAnnouncement = () => {
-        console.log("announcement deleted");
+    const handleDeleteAnnouncement = async (announcementId: number) => {
+        await deleteAnnouncement(announcementId);
+        alert("Announcement deleted successfully!!");
+        window.location.href = "/announcements";
     };
 
-    const handleSubmit = () => {
-        console.log("announcement submitted");
+    const handleSubmit = async (announcementToSubmit: AnnouncementProps) => {
+        if(announcementToEdit == null) {
+            await addAnnouncement(announcementToSubmit);
+        }
+        else {
+            await updateAnnouncement(announcementToSubmit.announcementId, announcementToSubmit);
+        }
+        alert("Announcement submitted successfully!!");
+        window.location.href = "/announcements";
     }
 
     const handleEditAnnouncement = (index: number) => {
@@ -37,12 +46,12 @@ export function Announcement() {
     return (
         <>
             <button className={styles.submitButton} onClick={() => setOpen(true)}>Add</button>
-            <AnnouncementTable rows={announcements} deleteRow={handleDeleteAnnouncement} editRow={handleEditAnnouncement} />
+            <AnnouncementTable announcements={announcements} deleteAnnouncement={handleDeleteAnnouncement} editAnnouncement={handleEditAnnouncement} />
             {open && <AnnouncementModal closeModal={() => {
                 setOpen(false);
-                setAnnouncementToEdit(0);
+                setAnnouncementToEdit(null);
             } } onSubmit={handleSubmit}
-                                        defaultValue={announcementToEdit !== 0 && announcements?.[announcementToEdit]} />}
+                                        defaultValue={announcements?.[announcementToEdit! - 1]} />}
         </>
     )
 }

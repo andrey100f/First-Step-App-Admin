@@ -3,12 +3,12 @@ import {BsFillPencilFill, BsFillTrashFill} from "react-icons/bs";
 import {AnnouncementProps} from "./AnnouncementProps.tsx";
 
 interface AnnouncementTableProps {
-    rows: AnnouncementProps[];
-    deleteRow: (announcementId: number) => void;
-    editRow: (announcementId: number) => void;
+    announcements: AnnouncementProps[];
+    deleteAnnouncement: (announcementId: number) => void;
+    editAnnouncement: (announcementId: number) => void;
 }
 
-export function AnnouncementTable({rows,  deleteRow, editRow}: AnnouncementTableProps) {
+export function AnnouncementTable({announcements,  deleteAnnouncement, editAnnouncement}: AnnouncementTableProps) {
     return (
         <section className={styles.EntityTable}>
             <table className={styles.table}>
@@ -24,18 +24,18 @@ export function AnnouncementTable({rows,  deleteRow, editRow}: AnnouncementTable
                     </tr>
                 </thead>
                 <tbody>
-                    {rows?.map((row => {
-                        return <tr key={row.announcementId}>
-                            <td>{row.announcementId}</td>
-                            <td>{row.title}</td>
-                            <td>{row.text}</td>
-                            <td>{row.faculty}</td>
-                            <td>{row.university}</td>
-                            <td>{row.url}</td>
+                    {announcements?.map((announcement => {
+                        return <tr key={announcement.announcementId}>
+                            <td>{announcement.announcementId}</td>
+                            <td>{announcement.title}</td>
+                            <td>{announcement.text}</td>
+                            <td>{announcement.faculty}</td>
+                            <td>{announcement.university}</td>
+                            <td>{announcement.url}</td>
                             <td>
                                 <span className={styles.actions}>
-                                    <BsFillTrashFill className={styles.deleteBtn} onClick={() => deleteRow(row.announcementId)} />
-                                    <BsFillPencilFill onClick={() => editRow(row.announcementId)} />
+                                    <BsFillTrashFill className={styles.deleteBtn} onClick={() => deleteAnnouncement(announcement.announcementId)} />
+                                    <BsFillPencilFill onClick={() => editAnnouncement(announcement.announcementId)} />
                                 </span>
                             </td>
                         </tr>
