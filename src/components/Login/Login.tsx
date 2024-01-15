@@ -1,8 +1,16 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import styles from "./Login.module.css";
 
 export function Login() {
+    const token = localStorage.getItem("loginToken");
+
+    useEffect(() => {
+        if(token !== "") {
+            window.location.href = "/universities";
+        }
+    }, [token]);
+
     function handleLogIn(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
         localStorage.setItem("loginToken", "loggedIn");

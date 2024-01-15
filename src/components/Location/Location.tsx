@@ -10,6 +10,13 @@ export function Location() {
     const [open, setOpen] = useState(false);
     const [locations, setLocations] = useState<LocationProps[]>([]);
     const [locationToEdit, setLocationToEdit] = useState<null | number>(null);
+    const token = localStorage.getItem("loginToken");
+
+    useEffect(() => {
+        if(token === "") {
+            window.location.href = "/login";
+        }
+    }, [token]);
 
     useEffect(() => {
         const getLocations = async () => {

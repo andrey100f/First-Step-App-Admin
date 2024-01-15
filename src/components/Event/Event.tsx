@@ -10,6 +10,13 @@ export function Event() {
     const [open, setOpen] = useState(false);
     const [events, setEvents] = useState<EventProps[]>([]);
     const [eventToEdit, setEventToEdit] = useState<null | number>(null);
+    const token = localStorage.getItem("loginToken");
+
+    useEffect(() => {
+        if(token === "") {
+            window.location.href = "/login";
+        }
+    }, [token]);
 
     useEffect(() => {
         const getEvents = async () => {

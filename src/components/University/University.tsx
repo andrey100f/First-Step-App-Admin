@@ -10,6 +10,13 @@ export function University() {
     const [open, setOpen] = useState(false);
     const [universities, setUniversities] = useState<UniversityProps[]>([]);
     const [universityToEdit, setUniversityToEdit] = useState<null | number>(null);
+    const token = localStorage.getItem("loginToken");
+
+    useEffect(() => {
+        if(token === "") {
+            window.location.href = "/login";
+        }
+    }, [token]);
 
     useEffect(() => {
         const getUniversities = async () => {

@@ -5,11 +5,19 @@ import styles from "../styles/EntityModal.module.css"
 import { useEffect, useState } from "react";
 import {addAnnouncement, deleteAnnouncement, getAllAnnouncements, updateAnnouncement} from "./AnnouncementApi.tsx";
 import {AnnouncementProps} from "./AnnouncementProps.tsx";
+import {Navigate} from "react-router-dom";
 
 export function Announcement() {
     const [open, setOpen] = useState(false);
     const [announcements, setAnnouncements] = useState<AnnouncementProps[]>([]);
     const [announcementToEdit, setAnnouncementToEdit] = useState<null | number>(null);
+    const token = localStorage.getItem("loginToken");
+
+    useEffect(() => {
+        if(token === "") {
+            window.location.href = "/login";
+        }
+    }, [token]);
 
     useEffect(() => {
         const getAnnouncements = async () => {

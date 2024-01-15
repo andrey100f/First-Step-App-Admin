@@ -9,6 +9,13 @@ export function Faculty() {
     const [open, setOpen] = useState(false);
     const [faculties, setFaculties] = useState<FacultyProps[]>([]);
     const [facultyToEdit, setFacultyToEdit] = useState<null | number>(null);
+    const token = localStorage.getItem("loginToken");
+
+    useEffect(() => {
+        if(token === "") {
+            window.location.href = "/login";
+        }
+    }, [token]);
 
     useEffect(() => {
         const getFaculties = async () => {

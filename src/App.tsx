@@ -10,34 +10,34 @@ import {Faculty} from "./components/Faculty/Faculty.tsx";
 
 function App() {
     const [showNavbar, setShowNavbar] = useState(true);
+    const token = localStorage.getItem("loginToken");
 
     useEffect(() => {
-        const token = localStorage.getItem("loginToken");
         if(token !== "") {
             setShowNavbar(true);
         }
         else {
             setShowNavbar(false);
         }
+    }, [token]);
 
-    }, []);
-  return (
-      <>
-          <BrowserRouter>
-              {showNavbar && (
-                  <Navbar />
-              )}
-              <Routes>
-                  <Route path="/login" element={<Login />} />
-                  <Route path="universities" element={<University />} />
-                  <Route path="faculties" element={<Faculty />} />
-                  <Route path="announcements" element={<Announcement />} />
-                  <Route path="locations" element={<Location />} />
-                  <Route path="events" element={<Event />} />
-              </Routes>
-          </BrowserRouter>
-      </>
-  )
+    return (
+        <>
+            <BrowserRouter>
+                {showNavbar && (
+                    <Navbar />
+                )}
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="universities" element={<University />} />
+                    <Route path="faculties" element={<Faculty />} />
+                    <Route path="announcements" element={<Announcement />} />
+                    <Route path="locations" element={<Location />} />
+                    <Route path="events" element={<Event />} />
+                </Routes>
+            </BrowserRouter>
+        </>
+    )
 }
 
 export default App
