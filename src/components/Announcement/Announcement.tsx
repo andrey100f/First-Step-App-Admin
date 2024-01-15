@@ -1,43 +1,48 @@
-import {AnnouncementTable} from "./AnnouncementTable/AnnouncementTable.tsx";
-import {AnnouncementModal} from "./AnnouncementModal/AnnouncementModal.tsx";
+import {AnnouncementTable} from "./AnnouncementTable.tsx";
+import {AnnouncementModal} from "./AnnouncementModal.tsx";
 
-import styles from "./AnnouncementModal/AnnouncementModal.module.css"
+import styles from "../utils/styles/EntityModal.module.css"
 import { useEffect, useState } from "react";
-import {getAnnouncements} from "./AnnouncementApi.tsx";
+import {addAnnouncement, deleteAnnouncement, getAllAnnouncements, updateAnnouncement} from "./AnnouncementApi.tsx";
 import {AnnouncementProps} from "./AnnouncementProps.tsx";
 
 export function Announcement() {
     const [open, setOpen] = useState(false);
     const [announcements, setAnnouncements] = useState<AnnouncementProps[]>([]);
-    const [announcementToEdit, setAnnouncementToEdit] = useState(0);
+    const [announcementToEdit, setAnnouncementToEdit] = useState<null | number>(null);
+    const token = localStorage.getItem("loginToken");
 
     useEffect(() => {
-        const getRows = async () => {
-            const res = await getAnnouncements();
+        if(token === "") {
+            window.location.href = "/login";
+        }
+    }, [token]);
+
+    useEffect(() => {
+        const getAnnouncements = async () => {
+            const res = await getAllAnnouncements(token!);
             setAnnouncements(res);
         }
 
-
-        getRows()
+        getAnnouncements()
     }, []);
 
-    const handleDeleteAnnouncement = () => {
-        // setAnnouncements(announcements.filter((_, idx) => idx !== index));
+    const handleDeleteAnnouncement = async (announcementId: number) => {
+        await deleteAnnouncement(announcementId, token!);
+        alert("Announcement deleted successfully!!");
+        window.location.href = "/announcements";
     };
 
-    const handleSubmit = () => {
-        // announcementToEdit === null
-        // ? setAnnouncements([...announcements, newAnnouncement])
-        //     : setAnnouncements(
-        //         announcements.map((announcement, index) => {
-        //             if(index !== announcementToEdit) {
-        //                 return announcement;
-        //             }
-        //             else {
-        //                 return newAnnouncement;
-        //             }
-        //         })
-        //     )
+    const handleSubmit = async (announcementToSubmit: AnnouncementProps) => {
+        if(announcementToEdit == null) {
+            await addAnnouncement(announcementToSubmit, token!);
+        }
+        else {
+            await updateAnnouncement(announcementToSubmit.announcementId, announcementToSubmit, token!);
+        }
+
+        alert("Announcement submitted successfully!!");
+        window.location.href = "/announcements";
     }
 
     const handleEditAnnouncement = (index: number) => {
@@ -48,12 +53,11 @@ export function Announcement() {
     return (
         <>
             <button className={styles.submitButton} onClick={() => setOpen(true)}>Add</button>
-            <AnnouncementTable rows={announcements} deleteRow={handleDeleteAnnouncement} editRow={handleEditAnnouncement} />
+            <AnnouncementTable announcements={announcements} deleteAnnouncement={handleDeleteAnnouncement} editAnnouncement={handleEditAnnouncement} />
             {open && <AnnouncementModal closeModal={() => {
                 setOpen(false);
-                setAnnouncementToEdit(0);
-            } } onSubmit={handleSubmit}
-                                        defaultValue={announcementToEdit !== 0 && announcements?.[announcementToEdit]} />}
+                setAnnouncementToEdit(null);
+            } } onSubmit={handleSubmit} defaultValue={announcements?.[announcementToEdit! - 1]} />}
         </>
     )
 }

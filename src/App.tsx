@@ -3,36 +3,41 @@ import {Navbar} from "./components/Navbar/Navbar.tsx";
 import {useEffect, useState} from "react";
 import {Login} from "./components/Login/Login.tsx";
 import {Announcement} from "./components/Announcement/Announcement.tsx";
+import {Event} from "./components/Event/Event.tsx";
+import {Location} from "./components/Location/Location.tsx";
+import {University} from "./components/University/University.tsx";
+import {Faculty} from "./components/Faculty/Faculty.tsx";
+
 function App() {
     const [showNavbar, setShowNavbar] = useState(true);
+    const token = localStorage.getItem("loginToken");
 
     useEffect(() => {
-        const token = localStorage.getItem("loginToken");
         if(token !== "") {
             setShowNavbar(true);
         }
         else {
             setShowNavbar(false);
         }
+    }, [token]);
 
-    }, []);
-  return (
-      <>
-          <BrowserRouter>
-              {showNavbar && (
-                  <Navbar />
-              )}
-              <Routes>
-                  <Route path="/login" element={<Login />} />
-                  <Route path="universities" element={<h1>Universities</h1>} />
-                  <Route path="faculties" element={<h1>Faculties</h1>} />
-                  <Route path="announcements" element={<Announcement />} />
-                  <Route path="locations" element={<h1>Locations</h1>} />
-                  <Route path="events" element={<h1>Events</h1>} />
-              </Routes>
-          </BrowserRouter>
-      </>
-  )
+    return (
+        <>
+            <BrowserRouter>
+                {showNavbar && (
+                    <Navbar />
+                )}
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="universities" element={<University />} />
+                    <Route path="faculties" element={<Faculty />} />
+                    <Route path="announcements" element={<Announcement />} />
+                    <Route path="locations" element={<Location />} />
+                    <Route path="events" element={<Event />} />
+                </Routes>
+            </BrowserRouter>
+        </>
+    )
 }
 
 export default App
