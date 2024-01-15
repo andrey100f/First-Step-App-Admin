@@ -1,4 +1,4 @@
-import styles from "../styles/EntityModal.module.css";
+import styles from "../utils/styles/EntityModal.module.css";
 import {useState} from "react";
 import {UniversityProps} from "./UniversityProps.tsx";
 
@@ -38,6 +38,7 @@ export function UniversityModal({closeModal, onSubmit, defaultValue}: University
     const validateForm = () => {
         if(formState.name && formState.img) {
             setErrors("")
+
             return true;
         }
 
@@ -49,6 +50,7 @@ export function UniversityModal({closeModal, onSubmit, defaultValue}: University
         }
 
         setErrors(errorFileds.join(", "))
+
         return false;
     }
 

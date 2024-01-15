@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {LocationProps} from "./LocationProps.tsx";
 import {addLocation, deleteLocation, getAllLocations, updateLocation} from "./LocationApi.tsx";
 
-import styles from "../styles/EntityModal.module.css"
+import styles from "../utils/styles/EntityModal.module.css"
 import {LocationTable} from "./LocationTable.tsx";
 import {LocationModal} from "./LocationModal.tsx";
 
@@ -20,27 +20,27 @@ export function Location() {
 
     useEffect(() => {
         const getLocations = async () => {
-            const res = await getAllLocations();
+            const res = await getAllLocations(token!);
             setLocations(res);
         }
-
 
         getLocations()
     }, []);
 
     const handleDeleteLocation = async (locationId: number) => {
-        await deleteLocation(locationId);
+        await deleteLocation(locationId, token!);
         alert("Location deleted successfully!!");
         window.location.href = "/locations";
     };
 
     const handleSubmitLocation = async (locationToSubmit: LocationProps) => {
         if(locationToEdit == null) {
-            await addLocation(locationToSubmit);
+            await addLocation(locationToSubmit, token!);
         }
         else {
-            await updateLocation(locationToSubmit.locationId, locationToSubmit);
+            await updateLocation(locationToSubmit.locationId, locationToSubmit, token!);
         }
+
         alert("Location submitted successfully!!");
         window.location.href = "/locations";
     }

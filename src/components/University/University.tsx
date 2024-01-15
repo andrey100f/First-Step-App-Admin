@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import styles from "../styles/EntityModal.module.css"
+import styles from "../utils/styles/EntityModal.module.css"
 import {UniversityProps} from "./UniversityProps.tsx";
 import {addUniversity, deleteUniversity, getAllUniversities, updateUniversity} from "./UniversityApi.tsx";
 import {UniversityTable} from "./UniversityTable.tsx";
@@ -20,27 +20,27 @@ export function University() {
 
     useEffect(() => {
         const getUniversities = async () => {
-            const res = await getAllUniversities();
+            const res = await getAllUniversities(token!);
             setUniversities(res);
         }
-
 
         getUniversities()
     }, []);
 
     const handleDeleteUniversity = async (universityId: number) => {
-        await deleteUniversity(universityId);
+        await deleteUniversity(universityId, token!);
         alert("University deleted successfully!!");
         window.location.href = "/universities";
     };
 
     const handleSubmit = async (universityToSubmit: UniversityProps) => {
         if(universityToEdit == null) {
-            await addUniversity(universityToSubmit);
+            await addUniversity(universityToSubmit, token!);
         }
         else {
-            await updateUniversity(universityToSubmit.universityId, universityToSubmit);
+            await updateUniversity(universityToSubmit.universityId, universityToSubmit, token!);
         }
+
         alert("University submitted successfully!!");
         window.location.href = "/universities";
     }

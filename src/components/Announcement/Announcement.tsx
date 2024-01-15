@@ -1,11 +1,10 @@
 import {AnnouncementTable} from "./AnnouncementTable.tsx";
 import {AnnouncementModal} from "./AnnouncementModal.tsx";
 
-import styles from "../styles/EntityModal.module.css"
+import styles from "../utils/styles/EntityModal.module.css"
 import { useEffect, useState } from "react";
 import {addAnnouncement, deleteAnnouncement, getAllAnnouncements, updateAnnouncement} from "./AnnouncementApi.tsx";
 import {AnnouncementProps} from "./AnnouncementProps.tsx";
-import {Navigate} from "react-router-dom";
 
 export function Announcement() {
     const [open, setOpen] = useState(false);
@@ -21,27 +20,27 @@ export function Announcement() {
 
     useEffect(() => {
         const getAnnouncements = async () => {
-            const res = await getAllAnnouncements();
+            const res = await getAllAnnouncements(token!);
             setAnnouncements(res);
         }
-
 
         getAnnouncements()
     }, []);
 
     const handleDeleteAnnouncement = async (announcementId: number) => {
-        await deleteAnnouncement(announcementId);
+        await deleteAnnouncement(announcementId, token!);
         alert("Announcement deleted successfully!!");
         window.location.href = "/announcements";
     };
 
     const handleSubmit = async (announcementToSubmit: AnnouncementProps) => {
         if(announcementToEdit == null) {
-            await addAnnouncement(announcementToSubmit);
+            await addAnnouncement(announcementToSubmit, token!);
         }
         else {
-            await updateAnnouncement(announcementToSubmit.announcementId, announcementToSubmit);
+            await updateAnnouncement(announcementToSubmit.announcementId, announcementToSubmit, token!);
         }
+
         alert("Announcement submitted successfully!!");
         window.location.href = "/announcements";
     }
@@ -58,8 +57,7 @@ export function Announcement() {
             {open && <AnnouncementModal closeModal={() => {
                 setOpen(false);
                 setAnnouncementToEdit(null);
-            } } onSubmit={handleSubmit}
-                                        defaultValue={announcements?.[announcementToEdit! - 1]} />}
+            } } onSubmit={handleSubmit} defaultValue={announcements?.[announcementToEdit! - 1]} />}
         </>
     )
 }

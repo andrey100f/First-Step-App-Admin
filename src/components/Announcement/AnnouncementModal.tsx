@@ -1,4 +1,4 @@
-import styles from "../styles/EntityModal.module.css";
+import styles from "../utils/styles/EntityModal.module.css";
 import {useEffect, useState} from "react";
 import {AnnouncementProps} from "./AnnouncementProps.tsx";
 import {UniversityProps} from "../University/UniversityProps.tsx";
@@ -22,10 +22,11 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
     const [formState, setFormState] = useState(defaultValue || initialState);
     const [errors, setErrors] = useState("");
     const [universities, setUniversities] = useState<UniversityProps[]>([]);
+    const token = localStorage.getItem("loginToken");
 
     useEffect(() => {
         const getUniversities = async () => {
-            const res = await getAllUniversities();
+            const res = await getAllUniversities(token!);
             setUniversities(res);
         }
 
@@ -54,10 +55,12 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
     const validateForm = () => {
         if(formState.title && formState.text && formState.university && formState.faculty && formState.url) {
             setErrors("")
+
             return true;
         }
 
         const errorFileds = []
+
         for(const [key, value] of Object.entries(formState)) {
             if(!value) {
                 errorFileds.push(key)
@@ -65,6 +68,7 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
         }
 
         setErrors(errorFileds.join(", "))
+
         return false;
     }
 

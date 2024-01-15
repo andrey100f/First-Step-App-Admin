@@ -1,9 +1,8 @@
-import styles from "../styles/EntityModal.module.css";
+import styles from "../utils/styles/EntityModal.module.css";
 import {useEffect, useState} from "react";
 import {FacultyProps} from "./FacultyProps.tsx";
 import {UniversityProps} from "../University/UniversityProps.tsx";
 import {getAllUniversities} from "../University/UniversityApi.tsx";
-import {formatDate} from "../utils";
 
 interface FacultyModalProps {
     closeModal: () => void;
@@ -20,10 +19,11 @@ export function FacultyModal({closeModal, onSubmit, defaultValue}: FacultyModalP
     const [formState, setFormState] = useState(defaultValue || initialState);
     const [errors, setErrors] = useState("");
     const [universities, setUniversities] = useState<UniversityProps[]>([]);
+    const token = localStorage.getItem("loginToken");
 
     useEffect(() => {
         const getUniversities = async () => {
-            const res = await getAllUniversities();
+            const res = await getAllUniversities(token!);
             setUniversities(res);
         }
 
@@ -52,6 +52,7 @@ export function FacultyModal({closeModal, onSubmit, defaultValue}: FacultyModalP
     const validateForm = () => {
         if(formState.facultyName && formState.universityName) {
             setErrors("")
+
             return true;
         }
 
@@ -63,6 +64,7 @@ export function FacultyModal({closeModal, onSubmit, defaultValue}: FacultyModalP
         }
 
         setErrors(errorFileds.join(", "))
+
         return false;
     }
 

@@ -1,4 +1,4 @@
-import styles from "../styles/EntityModal.module.css";
+import styles from "../utils/styles/EntityModal.module.css";
 import {useEffect, useState} from "react";
 import {LocationProps} from "./LocationProps.tsx";
 
@@ -47,10 +47,10 @@ export function LocationModal({closeModal, onSubmit, defaultValue}: LocationModa
     }
 
     const validateForm = () => {
-        console.log(formState);
         if(formState.name && formState.type && formState.latitude && formState.longitude && formState.img &&
             formState.description && formState.site) {
             setErrors("");
+
             return true
         }
 
@@ -62,6 +62,7 @@ export function LocationModal({closeModal, onSubmit, defaultValue}: LocationModa
         }
 
         setErrors(errorFields.join(", "))
+
         return false;
     }
 

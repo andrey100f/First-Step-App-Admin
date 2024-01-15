@@ -1,4 +1,4 @@
-import styles from "../styles/EntityModal.module.css"
+import styles from "../utils/styles/EntityModal.module.css"
 import { useEffect, useState } from "react";
 import {FacultyProps} from "./FacultyProps.tsx";
 import {addFaculty, deleteFaculty, getAllFaculties, updateFaculty} from "./FacultyApi.tsx";
@@ -19,27 +19,27 @@ export function Faculty() {
 
     useEffect(() => {
         const getFaculties = async () => {
-            const res = await getAllFaculties();
+            const res = await getAllFaculties(token!);
             setFaculties(res);
         }
-
 
         getFaculties()
     }, []);
 
     const handleDeleteFaculty = async (eventId: number) => {
-        await deleteFaculty(eventId);
+        await deleteFaculty(eventId, token!);
         alert("Faculty deleted successfully!!");
         window.location.href = "/faculties";
     };
 
     const handleSubmitFaculty = async (facultyToSubmit: FacultyProps) => {
         if(facultyToEdit == null) {
-            await addFaculty(facultyToSubmit);
+            await addFaculty(facultyToSubmit, token!);
         }
         else {
-            await updateFaculty(facultyToSubmit.facultyId, facultyToSubmit);
+            await updateFaculty(facultyToSubmit.facultyId, facultyToSubmit, token!);
         }
+
         alert("Faculty submitted successfully!!");
         window.location.href = "/faculties";
     }

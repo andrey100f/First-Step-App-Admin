@@ -1,4 +1,4 @@
-import styles from "../styles/EntityTable.module.css";
+import styles from "../utils/styles/EntityTable.module.css";
 import {BsFillPencilFill, BsFillTrashFill} from "react-icons/bs";
 import {UniversityProps} from "./UniversityProps.tsx";
 

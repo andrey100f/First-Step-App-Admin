@@ -1,42 +1,43 @@
 import {EventProps} from "./EventProps.tsx";
 import axios from "axios";
+import {adminUrl, securityConfig} from "../utils";
 
-export const getAllEvents: () => Promise<EventProps[]> = async () => {
+export const getAllEvents: (token: string) => Promise<EventProps[]> = async (token) => {
     try {
-        const res = await axios.get("http://localhost:8080/api/admin/events");
+        const res = await axios.get(`${adminUrl}/events`, securityConfig(token));
+
         return Promise.resolve(res.data);
     } catch (err) {
-        console.log(err);
         return Promise.reject(err);
     }
 }
 
-export const addEvent: (eventToAdd: EventProps) => Promise<EventProps> = async (eventToAdd) => {
+export const addEvent: (eventToAdd: EventProps, token: string) => Promise<EventProps> = async (eventToAdd, token) => {
     try {
-        const res = await axios.post("http://localhost:8080/api/admin/events", eventToAdd);
+        const res = await axios.post(`${adminUrl}/events`, eventToAdd, securityConfig(token));
+
         return Promise.resolve(res.data);
     } catch (err) {
-        console.log(err);
         return Promise.reject(err);
     }
 }
 
-export const updateEvent: (eventId: number, eventToUpdate: EventProps) => Promise<EventProps> = async (eventId, eventToUpdate) => {
+export const updateEvent: (eventId: number, eventToUpdate: EventProps, token: string) => Promise<EventProps> = async (eventId, eventToUpdate, token) => {
     try {
-        const res = await axios.put(`http://localhost:8080/api/admin/events/${eventId}`, eventToUpdate);
+        const res = await axios.put(`${adminUrl}/events/${eventId}`, eventToUpdate, securityConfig(token));
+
         return Promise.resolve(res.data);
     } catch (err) {
-        console.log(err);
         return Promise.reject(err);
     }
 }
 
-export const deleteEvent: (eventId: number) => Promise<EventProps> = async (eventId) => {
+export const deleteEvent: (eventId: number, token: string) => Promise<EventProps> = async (eventId, token) => {
     try {
-        const res = await axios.delete(`http://localhost:8080/api/admin/events/${eventId}`);
+        const res = await axios.delete(`${adminUrl}/events/${eventId}`, securityConfig(token));
+
         return Promise.resolve(res.data);
     } catch (err) {
-        console.log(err);
         return Promise.reject(err);
     }
 }

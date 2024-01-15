@@ -14,3 +14,19 @@ export function formatDate(dataInput: string): string {
 
     return `${year}-${month}-${day}`;
 }
+
+export const loginUrl = "http://localhost:8080/api/auth/authenticate";
+export const adminUrl = "http://localhost:8080/api/admin";
+
+export const config = {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+};
+
+export const securityConfig = (token?: string) => ({
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+    }
+});

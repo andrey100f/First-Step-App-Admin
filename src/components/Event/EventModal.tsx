@@ -1,4 +1,4 @@
-import styles from "../styles/EntityModal.module.css";
+import styles from "../utils/styles/EntityModal.module.css";
 import {useEffect, useState} from "react";
 import {EventProps} from "./EventProps.tsx";
 import {formatDate} from "../utils";
@@ -23,6 +23,7 @@ export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps
     const [formState, setFormState] = useState<EventProps>(defaultValue || initialState);
     const [errors, setErrors] = useState("");
     const [locations, setLocations] = useState<LocationProps[]>([]);
+    const token = localStorage.getItem("loginToken");
 
     useEffect(() => {
         setFormState({
@@ -33,7 +34,7 @@ export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps
 
     useEffect(() => {
         const getLocations = async () => {
-            const res = await getAllLocations();
+            const res = await getAllLocations(token!);
             setLocations(res);
         }
 
@@ -68,13 +69,13 @@ export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps
     }
 
     const validateForm = () => {
-        console.log(formState);
         if(formState.name && formState.description && formState.participants && formState.locationName) {
             setErrors("");
             return true
         }
 
         const errorFields = [];
+
         for(const [key, value] of Object.entries(formState)) {
             if(!value) {
                 errorFields.push(key)
@@ -82,6 +83,7 @@ export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps
         }
 
         setErrors(errorFields.join(", "))
+
         return false;
     }
 

@@ -23,24 +23,29 @@ export function Navbar() {
                     <NavLink className={`${styles.navbarLink} ${isUniversitiesPage ? styles.selected : ''}`}
                              to="universities">Universities</NavLink>
                 </li>
+
                 <li>
                     <NavLink className={`${styles.navbarLink} ${isFacultiesPage ? styles.selected : ''}`}
                              to="faculties">Faculties</NavLink>
                 </li>
+
                 <li>
                     <NavLink className={`${styles.navbarLink} ${isAnnouncementsPage ? styles.selected : ''}`}
                              to="announcements">Announcements</NavLink>
                 </li>
+
                 <li>
                     <NavLink className={`${styles.navbarLink} ${isLocationsPage ? styles.selected : ''}`}
                              to="locations">Locations</NavLink>
                 </li>
+
                 <li>
                     <NavLink className={`${styles.navbarLink} ${isEventsPage ? styles.selected : ''}`}
                              to="events">Events</NavLink>
                 </li>
+
                 <li>
-                    <NavLink className={styles.navbarLink} to="login" onClick={handleLogOut}>Logout</NavLink>
+                    <NavLink className={styles.logoutLink} to="login" onClick={handleLogOut}>Logout</NavLink>
                 </li>
             </menu>
         </nav>

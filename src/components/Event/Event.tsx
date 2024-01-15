@@ -1,7 +1,7 @@
 import {EventTable} from "./EventTable.tsx";
 import {EventModal} from "./EventModal.tsx";
 
-import styles from "../styles/EntityModal.module.css"
+import styles from "../utils/styles/EntityModal.module.css"
 import { useEffect, useState } from "react";
 import {addEvent, deleteEvent, getAllEvents, updateEvent} from "./EventApi.tsx";
 import {EventProps} from "./EventProps.tsx";
@@ -20,26 +20,25 @@ export function Event() {
 
     useEffect(() => {
         const getEvents = async () => {
-            const res = await getAllEvents();
+            const res = await getAllEvents(token!);
             setEvents(res);
         }
-
 
         getEvents()
     }, []);
 
     const handleDeleteEvent = async (eventId: number) => {
-        await deleteEvent(eventId);
+        await deleteEvent(eventId, token!);
         alert("Event deleted successfully!!");
         window.location.href = "/events";
     };
 
     const handleSubmitEvent = async (eventToSubmit: EventProps) => {
         if(eventToEdit == null) {
-            await addEvent(eventToSubmit);
+            await addEvent(eventToSubmit, token!);
         }
         else {
-            await updateEvent(eventToSubmit.eventId, eventToSubmit);
+            await updateEvent(eventToSubmit.eventId, eventToSubmit, token!);
         }
         alert("Event submitted successfully!!");
         window.location.href = "/events";

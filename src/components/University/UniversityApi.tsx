@@ -1,42 +1,42 @@
 import axios from "axios";
 import {UniversityProps} from "./UniversityProps.tsx";
+import {adminUrl, securityConfig} from "../utils";
 
-export const getAllUniversities: () => Promise<UniversityProps[]> = async () => {
+export const getAllUniversities: (token: string) => Promise<UniversityProps[]> = async (token) => {
     try {
-        const res = await axios.get("http://localhost:8080/api/admin/universities");
+        const res = await axios.get(`${adminUrl}/universities`, securityConfig(token));
         return Promise.resolve(res.data);
     } catch (err) {
-        console.log(err);
         return Promise.reject(err);
     }
 }
 
-export const addUniversity: (universityToAdd: UniversityProps) => Promise<UniversityProps> = async (universityToAdd) => {
+export const addUniversity: (universityToAdd: UniversityProps, token: string) => Promise<UniversityProps> = async (universityToAdd, token) => {
     try {
-        const res = await axios.post("http://localhost:8080/api/admin/universities", universityToAdd);
+        const res = await axios.post(`${adminUrl}/universities`, universityToAdd, securityConfig(token));
+
         return Promise.resolve(res.data);
     } catch (err) {
-        console.log(err);
         return Promise.reject(err);
     }
 }
 
-export const updateUniversity: (universityId: number, universityToUpdate: UniversityProps) => Promise<UniversityProps> = async (universityId, universityToUpdate) => {
+export const updateUniversity: (universityId: number, universityToUpdate: UniversityProps, token: string) => Promise<UniversityProps> = async (universityId, universityToUpdate, token) => {
     try {
-        const res = await axios.put(`http://localhost:8080/api/admin/universities/${universityId}`, universityToUpdate);
+        const res = await axios.put(`${adminUrl}/universities/${universityId}`, universityToUpdate, securityConfig(token));
+
         return Promise.resolve(res.data);
     } catch (err) {
-        console.log(err);
         return Promise.reject(err);
     }
 }
 
-export const deleteUniversity: (universityId: number) => Promise<UniversityProps> = async (universityId) => {
+export const deleteUniversity: (universityId: number, token: string) => Promise<UniversityProps> = async (universityId, token) => {
     try {
-        const res = await axios.delete(`http://localhost:8080/api/admin/universities/${universityId}`);
+        const res = await axios.delete(`${adminUrl}/universities/${universityId}`, securityConfig(token));
+
         return Promise.resolve(res.data);
     } catch (err) {
-        console.log(err);
         return Promise.reject(err);
     }
 }
