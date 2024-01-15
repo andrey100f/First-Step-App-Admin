@@ -66,7 +66,7 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
                 <form>
                     <section className={styles.entityFormGroup}>
                         <label htmlFor="title">Title</label>
-                        <textarea name="title" value={formState.title} onChange={handleChange} />
+                        <input type="text" name="title" value={formState.title} onChange={handleChange} />
                     </section>
 
                     <section className={styles.entityFormGroup}>

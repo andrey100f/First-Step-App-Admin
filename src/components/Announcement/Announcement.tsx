@@ -9,7 +9,7 @@ import {AnnouncementProps} from "./AnnouncementProps.tsx";
 export function Announcement() {
     const [open, setOpen] = useState(false);
     const [announcements, setAnnouncements] = useState<AnnouncementProps[]>([]);
-    const [announcementToEdit, setAnnouncementToEdit] = useState<null | number>(0);
+    const [announcementToEdit, setAnnouncementToEdit] = useState<null | number>(null);
 
     useEffect(() => {
         const getAnnouncements = async () => {

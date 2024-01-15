@@ -5,7 +5,7 @@ import {AnnouncementProps} from "./AnnouncementProps.tsx";
 interface AnnouncementTableProps {
     announcements: AnnouncementProps[];
     deleteAnnouncement: (announcementId: number) => void;
-    editAnnouncement: (announcementId: number) => void;
+    editAnnouncement: (index: number, announcementId: number) => void;
 }
 
 export function AnnouncementTable({announcements,  deleteAnnouncement, editAnnouncement}: AnnouncementTableProps) {
@@ -24,7 +24,7 @@ export function AnnouncementTable({announcements,  deleteAnnouncement, editAnnou
                     </tr>
                 </thead>
                 <tbody>
-                    {announcements?.map((announcement => {
+                    {announcements?.map(((announcement, index) => {
                         return <tr key={announcement.announcementId}>
                             <td>{announcement.announcementId}</td>
                             <td>{announcement.title}</td>
@@ -35,7 +35,7 @@ export function AnnouncementTable({announcements,  deleteAnnouncement, editAnnou
                             <td>
                                 <span className={styles.actions}>
                                     <BsFillTrashFill className={styles.deleteBtn} onClick={() => deleteAnnouncement(announcement.announcementId)} />
-                                    <BsFillPencilFill onClick={() => editAnnouncement(announcement.announcementId)} />
+                                    <BsFillPencilFill onClick={() => editAnnouncement(index + 1, announcement.announcementId)} />
                                 </span>
                             </td>
                         </tr>
