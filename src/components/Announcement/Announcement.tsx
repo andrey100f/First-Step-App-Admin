@@ -1,7 +1,7 @@
-import {AnnouncementTable} from "./AnnouncementTable/AnnouncementTable.tsx";
-import {AnnouncementModal} from "./AnnouncementModal/AnnouncementModal.tsx";
+import {AnnouncementTable} from "./AnnouncementTable.tsx";
+import {AnnouncementModal} from "./AnnouncementModal.tsx";
 
-import styles from "./AnnouncementModal/AnnouncementModal.module.css"
+import styles from "../styles/EntityModal.module.css"
 import { useEffect, useState } from "react";
 import {getAnnouncements} from "./AnnouncementApi.tsx";
 import {AnnouncementProps} from "./AnnouncementProps.tsx";
@@ -22,22 +22,11 @@ export function Announcement() {
     }, []);
 
     const handleDeleteAnnouncement = () => {
-        // setAnnouncements(announcements.filter((_, idx) => idx !== index));
+        console.log("announcement deleted");
     };
 
     const handleSubmit = () => {
-        // announcementToEdit === null
-        // ? setAnnouncements([...announcements, newAnnouncement])
-        //     : setAnnouncements(
-        //         announcements.map((announcement, index) => {
-        //             if(index !== announcementToEdit) {
-        //                 return announcement;
-        //             }
-        //             else {
-        //                 return newAnnouncement;
-        //             }
-        //         })
-        //     )
+        console.log("announcement submitted");
     }
 
     const handleEditAnnouncement = (index: number) => {

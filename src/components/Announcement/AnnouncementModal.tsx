@@ -1,14 +1,23 @@
-import styles from "./AnnouncementModal.module.css";
+import styles from "../styles/EntityModal.module.css";
 import {useState} from "react";
+import {AnnouncementProps} from "./AnnouncementProps.tsx";
 
-export function AnnouncementModal({closeModal, onSubmit, defaultValue}) {
-    const [formState, setFormState] = useState(defaultValue || {
-        title: "",
-        text: "",
-        faculty: "Facultatea de Matematica si Informatica",
-        university: "Universitatea Babes Bolyai",
-        url: ""
-    });
+interface AnnouncementModalProps {
+    closeModal: () => void;
+    onSubmit: (announcement: AnnouncementProps) => void;
+    defaultValue: AnnouncementProps;
+}
+
+const initialState = {
+    title: "",
+    text: "",
+    faculty: "Facultatea de Matematica si Informatica",
+    university: "Universitatea Babes Bolyai",
+    url: ""
+}
+
+export function AnnouncementModal({closeModal, onSubmit, defaultValue}: AnnouncementModalProps) {
+    const [formState, setFormState] = useState(defaultValue || initialState);
     const [errors, setErrors] = useState("");
 
     const handleChange = (e) => {
@@ -35,7 +44,7 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}) {
             return true;
         }
 
-        let errorFileds = []
+        const errorFileds = []
         for(const [key, value] of Object.entries(formState)) {
             if(!value) {
                 errorFileds.push(key)
@@ -55,17 +64,17 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}) {
         }}>
             <section className={styles.modal}>
                 <form>
-                    <section className={styles.announcementFormGroup}>
+                    <section className={styles.entityFormGroup}>
                         <label htmlFor="title">Title</label>
                         <textarea name="title" value={formState.title} onChange={handleChange} />
                     </section>
 
-                    <section className={styles.announcementFormGroup}>
+                    <section className={styles.entityFormGroup}>
                         <label htmlFor="text">Text</label>
                         <textarea name="text" value={formState.text} onChange={handleChange} />
                     </section>
 
-                    <section className={styles.announcementFormGroup}>
+                    <section className={styles.entityFormGroup}>
                         <label htmlFor="faculty">Faculty</label>
                         <select name="faculty" value={formState.faculty} onChange={handleChange}>
                             <option value="Facultatea de Matematica si Informatica">Facultatea de Matematica si Informatica</option>
@@ -74,7 +83,7 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}) {
                         </select>
                     </section>
 
-                    <section className={styles.announcementFormGroup}>
+                    <section className={styles.entityFormGroup}>
                         <label htmlFor="University">University</label>
                         <select name="University" value={formState.university} onChange={handleChange}>
                             <option value="Universitatea Babes-Bolyai">Universitatea Babes-Bolyai</option>
@@ -83,7 +92,7 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}) {
                         </select>
                     </section>
 
-                    <section className={styles.announcementFormGroup}>
+                    <section className={styles.entityFormGroup}>
                         <label htmlFor="url">Url</label>
                         <input type="text" name="url" value={formState.url} onChange={handleChange}/>
                     </section>

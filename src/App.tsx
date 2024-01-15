@@ -3,6 +3,9 @@ import {Navbar} from "./components/Navbar/Navbar.tsx";
 import {useEffect, useState} from "react";
 import {Login} from "./components/Login/Login.tsx";
 import {Announcement} from "./components/Announcement/Announcement.tsx";
+import {Event} from "./components/Event/Event.tsx";
+import {Location} from "./components/Location/Location.tsx";
+
 function App() {
     const [showNavbar, setShowNavbar] = useState(true);
 
@@ -27,8 +30,8 @@ function App() {
                   <Route path="universities" element={<h1>Universities</h1>} />
                   <Route path="faculties" element={<h1>Faculties</h1>} />
                   <Route path="announcements" element={<Announcement />} />
-                  <Route path="locations" element={<h1>Locations</h1>} />
-                  <Route path="events" element={<h1>Events</h1>} />
+                  <Route path="locations" element={<Location />} />
+                  <Route path="events" element={<Event />} />
               </Routes>
           </BrowserRouter>
       </>

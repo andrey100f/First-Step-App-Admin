@@ -1,6 +1,6 @@
-import styles from "./AnnouncementTable.module.css";
+import styles from "../styles/EntityTable.module.css";
 import {BsFillPencilFill, BsFillTrashFill} from "react-icons/bs";
-import {AnnouncementProps} from "../AnnouncementProps.tsx";
+import {AnnouncementProps} from "./AnnouncementProps.tsx";
 
 interface AnnouncementTableProps {
     rows: AnnouncementProps[];
@@ -10,7 +10,7 @@ interface AnnouncementTableProps {
 
 export function AnnouncementTable({rows,  deleteRow, editRow}: AnnouncementTableProps) {
     return (
-        <section className={styles.AnnouncementTable}>
+        <section className={styles.EntityTable}>
             <table className={styles.table}>
                 <thead>
                     <tr>

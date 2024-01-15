@@ -30,22 +30,22 @@
     box-shadow: 0 5px 5px #cccc;
 }
 
-.announcementFormGroup {
+.entityFormGroup {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
 }
 
-.announcementFormGroup input,
-.announcementFormGroup textarea,
-.announcementFormGroup select {
+.entityFormGroup input,
+.entityFormGroup textarea,
+.entityFormGroup select {
     border: 1px solid black;
     border-radius: 0.3rem;
     padding: 0.3rem;
     font-size: 1rem;
 }
 
-.announcementFormGroup label {
+.entityFormGroup label {
     margin-bottom: 0.2rem;
 }
 
