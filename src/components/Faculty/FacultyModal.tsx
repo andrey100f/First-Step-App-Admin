@@ -1,24 +1,22 @@
 import styles from "../styles/EntityModal.module.css";
 import {useEffect, useState} from "react";
-import {AnnouncementProps} from "./AnnouncementProps.tsx";
+import {FacultyProps} from "./FacultyProps.tsx";
 import {UniversityProps} from "../University/UniversityProps.tsx";
 import {getAllUniversities} from "../University/UniversityApi.tsx";
+import {formatDate} from "../utils";
 
-interface AnnouncementModalProps {
+interface FacultyModalProps {
     closeModal: () => void;
-    onSubmit: (announcement: AnnouncementProps) => void;
-    defaultValue: AnnouncementProps;
+    onSubmit: (university: FacultyProps) => void;
+    defaultValue: FacultyProps;
 }
 
 const initialState = {
-    title: "",
-    text: "",
-    faculty: "",
-    university: "",
-    url: ""
+    universityName: "",
+    facultyName: "",
 }
 
-export function AnnouncementModal({closeModal, onSubmit, defaultValue}: AnnouncementModalProps) {
+export function FacultyModal({closeModal, onSubmit, defaultValue}: FacultyModalProps) {
     const [formState, setFormState] = useState(defaultValue || initialState);
     const [errors, setErrors] = useState("");
     const [universities, setUniversities] = useState<UniversityProps[]>([]);
@@ -52,7 +50,7 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
     }
 
     const validateForm = () => {
-        if(formState.title && formState.text && formState.university && formState.faculty && formState.url) {
+        if(formState.facultyName && formState.universityName) {
             setErrors("")
             return true;
         }
@@ -74,22 +72,12 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
                      if(e.target.className === styles.modalContainer) {
                          closeModal();
                      }
-        }}>
+                 }}>
             <section className={styles.modal}>
                 <form>
                     <section className={styles.entityFormGroup}>
-                        <label htmlFor="title">Title</label>
-                        <input type="text" name="title" value={formState.title} onChange={handleChange} />
-                    </section>
-
-                    <section className={styles.entityFormGroup}>
-                        <label htmlFor="text">Text</label>
-                        <textarea name="text" value={formState.text} onChange={handleChange} />
-                    </section>
-
-                    <section className={styles.entityFormGroup}>
-                        <label htmlFor="university">University</label>
-                        <select name="university" value={formState.university} onChange={handleChange}>
+                        <label htmlFor="universityName">University</label>
+                        <select name="universityName" value={formState.universityName} onChange={handleChange}>
                             <option value="">Select university</option>
                             {universities?.map(university => {
                                 return (<option value={university.name}>{university.name}</option>)
@@ -98,26 +86,8 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
                     </section>
 
                     <section className={styles.entityFormGroup}>
-                        <label htmlFor="faculty">Faculty</label>
-                        <select name="faculty" value={formState.faculty} onChange={handleChange}>
-                            <option value="">Select faculty</option>
-                            {universities
-                                ?.filter(university => university.name === formState.university)
-                                ?.map(university =>
-                                    university.faculties.map(faculty => (
-                                        <option key={faculty.facultyName} value={faculty.facultyName}>
-                                            {faculty.facultyName}
-                                        </option>
-                                    ))
-                                )
-                            }
-
-                        </select>
-                    </section>
-
-                    <section className={styles.entityFormGroup}>
-                        <label htmlFor="url">Url</label>
-                        <input type="text" name="url" value={formState.url} onChange={handleChange}/>
+                        <label htmlFor="facultyName">Faculty</label>
+                        <input type="test" name="facultyName" value={formState.facultyName} onChange={handleChange}/>
                     </section>
 
                     {errors &&
