@@ -2,12 +2,21 @@ import styles from "../utils/styles/EntityTable.module.css";
 import {BsFillPencilFill, BsFillTrashFill} from "react-icons/bs";
 import {UniversityProps} from "./UniversityProps.tsx";
 
+/**
+ * Props pentru UniversityTable
+ */
 interface UniversityTableProps {
     universities: UniversityProps[];
     deleteUniversity: (universityId: number) => void;
     editUniversity: (index: number, universityId: number) => void;
 }
 
+/**
+ * Component pentru afișarea tabelului de universități
+ * @param universities - Lista de universități
+ * @param deleteUniversity - Funcție pentru ștergerea unei universități
+ * @param editUniversity - Funcție pentru editarea unei universități
+ */
 export function UniversityTable({universities,  deleteUniversity, editUniversity}: UniversityTableProps) {
     return (
         <section className={styles.EntityTable}>

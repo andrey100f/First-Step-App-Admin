@@ -2,6 +2,9 @@ import styles from "../utils/styles/EntityModal.module.css";
 import {useEffect, useState} from "react";
 import {LocationProps} from "./LocationProps.tsx";
 
+/**
+ * Starea inițială a formularului
+ */
 const initialState = {
     name: "",
     type: "",
@@ -12,22 +15,38 @@ const initialState = {
     site: ""
 }
 
+/**
+ * Proprietățile componente
+ */
 interface LocationModalProps {
     closeModal: () => void;
     onSubmit: (event: LocationProps) => void;
     defaultValue: LocationProps
 }
 
+/**
+ * Componenta pentru afișarea și gestionarea unui modal pentru locații
+ * @param closeModal - Funcția pentru închiderea modalului
+ * @param onSubmit - Funcția pentru trimiterea datelor introduse în modal
+ * @param defaultValue - Valoarea implicită a datelor (pentru editare)
+ */
 export function LocationModal({closeModal, onSubmit, defaultValue}: LocationModalProps) {
     const [formState, setFormState] = useState<LocationProps>(defaultValue || initialState);
     const [errors, setErrors] = useState("");
 
+    /**
+     * Efect pentru inițializarea stării
+     */
     useEffect(() => {
         setFormState({
             ...formState,
         });
     }, []);
 
+    /**
+     * Funcție pentru gestionarea schimbărilor în formular
+     * @param e - Evenimentul de schimbare
+     */
     const handleChange = (e) => {
         setFormState({
             ...formState,
@@ -35,6 +54,10 @@ export function LocationModal({closeModal, onSubmit, defaultValue}: LocationModa
         })
     }
 
+    /**
+     * Funcție pentru gestionarea evenimentului de trimitere a formularului
+     * @param e - Evenimentul de trimitere
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -46,6 +69,12 @@ export function LocationModal({closeModal, onSubmit, defaultValue}: LocationModa
         closeModal();
     }
 
+    /**
+     * Verificam daca campurile necesare sunt completate in formState. Daca toate campurile necesare sunt completate,
+     * atunci nu exista nici o eroare si returnam true pentru a indica ca formularul este validat cu succes.
+     * Daca exista campuri necompletate, le adaugam la lista errorFields. Setam mesajul de eroare cu lista campurilor
+     * necompletate si returnam false pentru a indica ca formularul nu este validat.
+     */
     const validateForm = () => {
         if(formState.name && formState.type && formState.latitude && formState.longitude && formState.img &&
             formState.description && formState.site) {
@@ -66,6 +95,9 @@ export function LocationModal({closeModal, onSubmit, defaultValue}: LocationModa
         return false;
     }
 
+    /**
+     * Componenta de afișare a modalului
+     */
     return (
         <section className={styles.modalContainer}
                  onClick={(e) => {

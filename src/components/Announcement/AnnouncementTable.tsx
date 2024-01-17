@@ -2,12 +2,21 @@ import styles from "../utils/styles/EntityTable.module.css";
 import {BsFillPencilFill, BsFillTrashFill} from "react-icons/bs";
 import {AnnouncementProps} from "./AnnouncementProps.tsx";
 
+/**
+ * Proprietățile necesare pentru componenta AnnouncementTable.
+ */
 interface AnnouncementTableProps {
     announcements: AnnouncementProps[];
     deleteAnnouncement: (announcementId: number) => void;
     editAnnouncement: (index: number, announcementId: number) => void;
 }
 
+/**
+ * Componenta pentru afișarea tabelului de anunțuri.
+ * @param announcements - Lista de anunțuri.
+ * @param deleteAnnouncement - Funcție pentru ștergerea unui anunț.
+ * @param editAnnouncement - Funcție pentru editarea unui anunț.
+ */
 export function AnnouncementTable({announcements,  deleteAnnouncement, editAnnouncement}: AnnouncementTableProps) {
     return (
         <section className={styles.EntityTable}>

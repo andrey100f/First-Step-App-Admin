@@ -1,3 +1,8 @@
+/**
+ * Format a date string to yyyy-MM-dd format
+ * @param dataInput - Date string
+ * @returns Formatted date string
+ */
 export function formatDate(dataInput: string): string {
     const dataObj = new Date(dataInput.replace("Z", "+00:00"));
 
