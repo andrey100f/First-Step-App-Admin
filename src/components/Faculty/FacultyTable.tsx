@@ -2,12 +2,22 @@ import styles from "../utils/styles/EntityTable.module.css";
 import {BsFillPencilFill, BsFillTrashFill} from "react-icons/bs";
 import {FacultyProps} from "./FacultyProps.tsx";
 
+/**
+ * Componenta pentru afișarea unei tabele de facultăți
+ */
 interface FacultyTableProps {
     faculties: FacultyProps[];
     deleteFaculty: (facultyId: number) => void;
     editFaculty: (index: number, facultyId: number) => void;
 }
 
+/**
+ * Funcția de reprezentare a tabelei facultăților
+ * @param faculties - Lista de facultăți
+ * @param deleteFaculty - Funcția de ștergere a unei facultăți
+ * @param editFaculty - Funcția de editare a unei facultăți
+ * @constructor
+ */
 export function FacultyTable({faculties,  deleteFaculty, editFaculty}: FacultyTableProps) {
     return (
         <section className={styles.EntityTable}>

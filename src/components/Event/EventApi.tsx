@@ -2,6 +2,10 @@ import {EventProps} from "./EventProps.tsx";
 import axios from "axios";
 import {adminUrl, securityConfig} from "../utils";
 
+/**
+ * Obține toate evenimentele de pe server.
+ * @param token - Token-ul de autentificare.
+ */
 export const getAllEvents: (token: string) => Promise<EventProps[]> = async (token) => {
     try {
         const res = await axios.get(`${adminUrl}/events`, securityConfig(token));
@@ -12,6 +16,11 @@ export const getAllEvents: (token: string) => Promise<EventProps[]> = async (tok
     }
 }
 
+/**
+ * Adaugă un nou eveniment pe server.
+ * @param eventToAdd - Evenimentul de adăugat.
+ * @param token - Token-ul de autentificare.
+ */
 export const addEvent: (eventToAdd: EventProps, token: string) => Promise<EventProps> = async (eventToAdd, token) => {
     try {
         const res = await axios.post(`${adminUrl}/events`, eventToAdd, securityConfig(token));
@@ -22,6 +31,12 @@ export const addEvent: (eventToAdd: EventProps, token: string) => Promise<EventP
     }
 }
 
+/**
+ * Actualizează un eveniment existent pe server.
+ * @param eventId - ID-ul evenimentului de actualizat.
+ * @param eventToUpdate - Evenimentul actualizat.
+ * @param token - Token-ul de autentificare.
+ */
 export const updateEvent: (eventId: number, eventToUpdate: EventProps, token: string) => Promise<EventProps> = async (eventId, eventToUpdate, token) => {
     try {
         const res = await axios.put(`${adminUrl}/events/${eventId}`, eventToUpdate, securityConfig(token));
@@ -32,6 +47,11 @@ export const updateEvent: (eventId: number, eventToUpdate: EventProps, token: st
     }
 }
 
+/**
+ * Șterge un eveniment existent pe server.
+ * @param eventId - ID-ul evenimentului de șters.
+ * @param token - Token-ul de autentificare.
+ */
 export const deleteEvent: (eventId: number, token: string) => Promise<EventProps> = async (eventId, token) => {
     try {
         const res = await axios.delete(`${adminUrl}/events/${eventId}`, securityConfig(token));

@@ -3,27 +3,44 @@ import React, {useEffect, useState} from "react";
 import styles from "./Login.module.css";
 import {login} from "./LoginApi.tsx";
 
+/**
+ * Proprietățile pentru componenta de login
+ */
 interface LoginProps {
     email: string;
     password: string;
 }
 
+/**
+ * Starea inițială a componentei
+ */
 const initialState = {
     email: "",
     password: ""
 }
 
+/**
+ * Componenta pentru pagina de login
+ * @constructor
+ */
 export function Login() {
     const token = localStorage.getItem("loginToken");
     const [formState, setFormState] = useState<LoginProps>(initialState);
     const [errors, setErrors] = useState("");
 
+    /**
+     * Efect secundar pentru verificarea existenței unui token.
+     * Dacă token-ul există, utilizatorul este redirecționat la pagina "universities".
+     */
     useEffect(() => {
         if(token !== "") {
             window.location.href = "/universities";
         }
     }, [token]);
 
+    /**
+     * Funcție pentru validarea formularului de login
+     */
     const validateForm = () => {
         if(formState.email && formState.password) {
             setErrors("")
@@ -41,6 +58,10 @@ export function Login() {
         return false;
     }
 
+    /**
+     * Funcție pentru gestionarea evenimentului de schimbare a valorilor în formular
+     * @param e - Evenimentul de schimbare
+     */
     const handleChange = (e) => {
         setFormState({
             ...formState,
@@ -48,6 +69,10 @@ export function Login() {
         })
     }
 
+    /**
+     * Funcție asincronă pentru gestionarea evenimentului de logare
+     * @param e - Evenimentul de click pe butonul de logare
+     */
     async function handleLogIn(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
 
@@ -60,6 +85,9 @@ export function Login() {
         window.location.href = "/announcements"
     }
 
+    /**
+     * Renderea componentei
+     */
     return (
         <section className={styles.loginFormContainer}>
             <section className={styles.loginLogo}>

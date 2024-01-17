@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 import {addAnnouncement, deleteAnnouncement, getAllAnnouncements, updateAnnouncement} from "./AnnouncementApi.tsx";
 import {AnnouncementProps} from "./AnnouncementProps.tsx";
 
+/**
+ * Componenta principală pentru gestionarea anunțurilor.
+ * @constructor
+ */
 export function Announcement() {
     const [open, setOpen] = useState(false);
     const [announcements, setAnnouncements] = useState<AnnouncementProps[]>([]);
@@ -27,12 +31,20 @@ export function Announcement() {
         getAnnouncements()
     }, []);
 
+    /**
+     * Funcție pentru ștergerea unui anunț.
+     *  @param announcementId - ID-ul anunțului de șters.
+     */
     const handleDeleteAnnouncement = async (announcementId: number) => {
         await deleteAnnouncement(announcementId, token!);
         alert("Announcement deleted successfully!!");
         window.location.href = "/announcements";
     };
 
+    /**
+     * * Funcție pentru submiterea unui anunț.
+     * @param announcementToSubmit - Anunțul de submitat.
+     */
     const handleSubmit = async (announcementToSubmit: AnnouncementProps) => {
         if(announcementToEdit == null) {
             await addAnnouncement(announcementToSubmit, token!);
@@ -45,11 +57,18 @@ export function Announcement() {
         window.location.href = "/announcements";
     }
 
+    /**
+     * * Funcție pentru editarea unui anunț.
+     * @param index - Indexul anunțului de editat.
+     */
     const handleEditAnnouncement = (index: number) => {
         setAnnouncementToEdit(index);
         setOpen(true);
     }
 
+    /**
+     * Renderea componentei
+     */
     return (
         <>
             <button className={styles.submitButton} onClick={() => setOpen(true)}>Add</button>

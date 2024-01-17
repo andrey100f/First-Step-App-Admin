@@ -5,6 +5,7 @@ import {formatDate} from "../utils";
 import {LocationProps} from "../Location/LocationProps.tsx";
 import {getAllLocations} from "../Location/LocationApi.tsx";
 
+// Starea inițială a formularului
 const initialState = {
     name: "",
     description: "",
@@ -13,18 +14,30 @@ const initialState = {
     eventDate: "2024-01-14"
 }
 
+/**
+ * Proprietățile componentei EventModal.
+ */
 interface EventModalProps {
     closeModal: () => void;
     onSubmit: (event: EventProps) => void;
     defaultValue: EventProps
 }
 
+/**
+ * Componenta pentru afișarea unui modal pentru evenimente.
+ * @param closeModal - Funcție pentru închiderea modalului.
+ * @param onSubmit - Funcție pentru a trimite datele evenimentului la submit.
+ * @param defaultValue - Valoare implicită pentru inițializarea formularului.
+ */
 export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps) {
     const [formState, setFormState] = useState<EventProps>(defaultValue || initialState);
     const [errors, setErrors] = useState("");
     const [locations, setLocations] = useState<LocationProps[]>([]);
     const token = localStorage.getItem("loginToken");
 
+    /**
+     * Efect pentru a formata data inițială a evenimentului la încărcarea componentei.
+     */
     useEffect(() => {
         setFormState({
             ...formState,
@@ -32,6 +45,9 @@ export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps
         });
     }, []);
 
+    /**
+     * Efect pentru a obține lista de locații la încărcarea componentei.
+     */
     useEffect(() => {
         const getLocations = async () => {
             const res = await getAllLocations(token!);
@@ -43,6 +59,10 @@ export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps
     }, []);
 
 
+    /**
+     * Funcție pentru a actualiza starea formularului la modificarea valorilor.
+     * @param e - Evenimentul de schimbare a valorii unui câmp de input.
+     */
     const handleChange = (e) => {
         setFormState({
             ...formState,
@@ -50,6 +70,10 @@ export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps
         })
     }
 
+    /**
+     * Funcție pentru a actualiza data evenimentului la schimbarea valorii câmpului de data.
+     * @param e - Evenimentul de schimbare a valorii câmpului de data.
+     */
     const handleChangeDate = (e) => {
         setFormState({
             ...formState,
@@ -57,6 +81,10 @@ export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps
         })
     }
 
+    /**
+     * Funcție pentru a gestiona submit-ul formularului.
+     * @param e - Evenimentul de submit al formularului.
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -68,6 +96,12 @@ export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps
         closeModal();
     }
 
+    /**
+     * Verificam daca campurile necesare sunt completate in formState. Daca toate campurile necesare sunt completate,
+     * atunci nu exista nici o eroare si returnam true pentru a indica ca formularul este validat cu succes.
+     * Daca exista campuri necompletate, le adaugam la lista errorFields. Setam mesajul de eroare cu lista campurilor
+     * necompletate si returnam false pentru a indica ca formularul nu este validat.
+     */
     const validateForm = () => {
         if(formState.name && formState.description && formState.participants && formState.locationName) {
             setErrors("");
@@ -87,6 +121,9 @@ export function EventModal({closeModal, onSubmit, defaultValue}: EventModalProps
         return false;
     }
 
+    /**
+     * Renderează componenta EventModal.
+     */
     return (
         <section className={styles.modalContainer}
                  onClick={(e) => {

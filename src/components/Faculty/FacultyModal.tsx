@@ -4,23 +4,40 @@ import {FacultyProps} from "./FacultyProps.tsx";
 import {UniversityProps} from "../University/UniversityProps.tsx";
 import {getAllUniversities} from "../University/UniversityApi.tsx";
 
+/**
+ * Componenta pentru gestionarea modalului de adăugare/editare a unei facultăți.
+ */
 interface FacultyModalProps {
     closeModal: () => void;
     onSubmit: (university: FacultyProps) => void;
     defaultValue: FacultyProps;
 }
 
+/**
+ * Starea inițială a formularului.
+ */
 const initialState = {
     universityName: "",
     facultyName: "",
 }
 
+/**
+ * Componenta principală pentru modalul de facultate.
+ *
+ * @param closeModal - Funcția de închidere a modalului
+ * @param onSubmit - Funcția apelată la submiterea formularului
+ * @param defaultValue - Valoarea implicită a formularului pentru editare
+ */
 export function FacultyModal({closeModal, onSubmit, defaultValue}: FacultyModalProps) {
     const [formState, setFormState] = useState(defaultValue || initialState);
     const [errors, setErrors] = useState("");
     const [universities, setUniversities] = useState<UniversityProps[]>([]);
     const token = localStorage.getItem("loginToken");
 
+
+    /**
+     * Obține lista de universități la încărcarea componentei
+     */
     useEffect(() => {
         const getUniversities = async () => {
             const res = await getAllUniversities(token!);
@@ -31,6 +48,11 @@ export function FacultyModal({closeModal, onSubmit, defaultValue}: FacultyModalP
         getUniversities()
     }, []);
 
+    /**
+     * Actualizează starea formularului la schimbarea valorii în câmpuri.
+     *
+     * @param e - Evenimentul de schimbare a valorii
+     */
     const handleChange = (e) => {
         setFormState({
             ...formState,
@@ -38,6 +60,11 @@ export function FacultyModal({closeModal, onSubmit, defaultValue}: FacultyModalP
         })
     }
 
+    /**
+     * Gestionează submiterea formularului.
+     *
+     * @param e - Evenimentul de submitere
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -49,6 +76,12 @@ export function FacultyModal({closeModal, onSubmit, defaultValue}: FacultyModalP
         closeModal();
     }
 
+    /**
+     * Verificam daca campurile necesare sunt completate in formState. Daca toate campurile necesare sunt completate,
+     * atunci nu exista nici o eroare si returnam true pentru a indica ca formularul este validat cu succes.
+     * Daca exista campuri necompletate, le adaugam la lista errorFields. Setam mesajul de eroare cu lista campurilor
+     * necompletate si returnam false pentru a indica ca formularul nu este validat.
+     */
     const validateForm = () => {
         if(formState.facultyName && formState.universityName) {
             setErrors("")

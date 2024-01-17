@@ -2,6 +2,10 @@ import {NavLink, useLocation} from "react-router-dom";
 
 import styles from "./Navbar.module.css";
 
+/**
+ * Componenta Navbar pentru navigarea în aplicație.
+ * @constructor
+ */
 export function Navbar() {
     const location = useLocation();
     const isAnnouncementsPage = location.pathname === "/announcements"
@@ -10,6 +14,9 @@ export function Navbar() {
     const isLocationsPage = location.pathname === "/locations"
     const isEventsPage = location.pathname === "/events"
 
+    /**
+     * Funcție pentru a trata acțiunea de deconectare (logout)
+     */
     function handleLogOut() {
         localStorage.setItem("loginToken", "");
         window.location.href = "/login";

@@ -3,12 +3,21 @@ import {BsFillPencilFill, BsFillTrashFill} from "react-icons/bs";
 import {EventProps} from "./EventProps.tsx";
 import {formatDate} from "../utils";
 
+/**
+ * Proprietățile componentei EventTable.
+ */
 interface EventTableProps {
     events: EventProps[];
     deleteEvent: (eventId: number) => void;
     editEvent: (index: number, eventId: number) => void;
 }
 
+/**
+ * Componenta pentru afișarea unei tabele de evenimente.
+ * @param events - Lista de evenimente.
+ * @param deleteEvent - Funcție pentru ștergerea unui eveniment.
+ * @param editEvent - Funcție pentru editarea unui eveniment.
+ */
 export function EventTable({events,  deleteEvent, editEvent}: EventTableProps) {
     return (
         <section className={styles.EntityTable}>

@@ -2,12 +2,22 @@ import styles from "../utils/styles/EntityTable.module.css";
 import {BsFillPencilFill, BsFillTrashFill} from "react-icons/bs";
 import {LocationProps} from "./LocationProps.tsx";
 
+/**
+ * Proprietățile componentei LocationTable
+ */
 interface LocationTableProps {
     locations: LocationProps[];
     deleteLocation: (locationId: number) => void;
     editLocation: (index: number, locationId: number) => void;
 }
 
+/**
+ * Componenta pentru afișarea tabelei cu locații
+ * @param locations - Lista de locații
+ * @param deleteLocation - Funcția pentru ștergerea unei locații
+ * @param editLocation - Funcția pentru editarea unei locații
+ * @constructor
+ */
 export function LocationTable({locations,  deleteLocation, editLocation}: LocationTableProps) {
     return (
         <section className={styles.EntityTable}>

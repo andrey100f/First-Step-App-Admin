@@ -4,12 +4,18 @@ import {AnnouncementProps} from "./AnnouncementProps.tsx";
 import {UniversityProps} from "../University/UniversityProps.tsx";
 import {getAllUniversities} from "../University/UniversityApi.tsx";
 
+/**
+ * Proprietățile necesare pentru componenta AnnouncementModal.
+ */
 interface AnnouncementModalProps {
     closeModal: () => void;
     onSubmit: (announcement: AnnouncementProps) => void;
     defaultValue: AnnouncementProps;
 }
 
+/**
+ * Starea inițială a formularului.
+ */
 const initialState = {
     title: "",
     text: "",
@@ -18,12 +24,21 @@ const initialState = {
     url: ""
 }
 
+/**
+ * Componenta pentru fereastra modală de adăugare/editare anunț.
+ * @param closeModal - Funcție pentru închiderea ferestrei modale.
+ * @param onSubmit - Funcție pentru trimiterea formularului.
+ * @param defaultValue - Valoarea implicită a formularului pentru editare.
+ */
 export function AnnouncementModal({closeModal, onSubmit, defaultValue}: AnnouncementModalProps) {
     const [formState, setFormState] = useState(defaultValue || initialState);
     const [errors, setErrors] = useState("");
     const [universities, setUniversities] = useState<UniversityProps[]>([]);
     const token = localStorage.getItem("loginToken");
 
+    /**
+     * Efect secundar pentru obținerea listei de universități.
+     */
     useEffect(() => {
         const getUniversities = async () => {
             const res = await getAllUniversities(token!);
@@ -34,6 +49,10 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
         getUniversities()
     }, []);
 
+    /**
+     * Funcție pentru gestionarea modificărilor în formular.
+     * @param e - Evenimentul de schimbare.
+     */
     const handleChange = (e) => {
         setFormState({
             ...formState,
@@ -41,6 +60,10 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
         })
     }
 
+    /**
+     * Funcție pentru gestionarea trimiterii formularului.
+     * @param e - Evenimentul de submit.
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -52,6 +75,12 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
         closeModal();
     }
 
+    /**
+     * Verificam daca campurile necesare sunt completate in formState. Daca toate campurile necesare sunt completate,
+     * atunci nu exista nici o eroare si returnam true pentru a indica ca formularul este validat cu succes.
+     * Daca exista campuri necompletate, le adaugam la lista errorFields. Setam mesajul de eroare cu lista campurilor
+     * necompletate si returnam false pentru a indica ca formularul nu este validat.
+     */
     const validateForm = () => {
         if(formState.title && formState.text && formState.university && formState.faculty && formState.url) {
             setErrors("")
@@ -72,6 +101,9 @@ export function AnnouncementModal({closeModal, onSubmit, defaultValue}: Announce
         return false;
     }
 
+    /**
+     * Renderea componentei.
+     */
     return (
         <section className={styles.modalContainer}
                  onClick={(e) => {
